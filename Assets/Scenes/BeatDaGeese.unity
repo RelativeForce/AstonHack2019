@@ -795,7 +795,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _goose: {fileID: 442201403}
-  _roarAudio: {fileID: 0}
+  _roarAudio: {fileID: 442201404}
+  _deathAudio: {fileID: 442201406}
 --- !u!82 &442201406
 AudioSource:
   m_ObjectHideFlags: 0
@@ -806,7 +807,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: abc08d36bd1bb1440a2a3bd5e5880bfb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9842a8113a1fd1c429823080ac1a8813, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

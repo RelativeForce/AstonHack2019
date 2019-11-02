@@ -11,6 +11,8 @@ public class BossGooseLogic : MonoBehaviour
     private Transform _goose;
     [SerializeField]
     private AudioSource _roarAudio;
+    [SerializeField]
+    private AudioSource _deathAudio;
 
     public static Random random = new Random();
 
@@ -71,6 +73,8 @@ public class BossGooseLogic : MonoBehaviour
             _isAlive = false;
             _animator.SetBool("isDead", true);
             _goose.rotation = Quaternion.Euler(0, 90 * random.Next(0, 3), 90);
+
+            _deathAudio.Play();
         }
     }
 }
