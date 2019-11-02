@@ -1,14 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 public class BossGooseLogic : MonoBehaviour
 {
     [SerializeField]
     private Transform _goose;
     [SerializeField]
-    private AudioSource _audio;
+    private AudioSource _roarAudio;
+
+    public static Random random = new Random();
 
     private Animator _animator;
     private bool _isAlive;
@@ -37,7 +41,7 @@ public class BossGooseLogic : MonoBehaviour
                 {
                     _animator.SetBool("isEnraged", true);
                     _isEnraged = true;
-                    _audio.Play();
+                    _roarAudio.Play();
                 }
             }
             else
@@ -50,8 +54,23 @@ public class BossGooseLogic : MonoBehaviour
 
                 velocity.y = 0;
 
+                if (Math.Sqrt((velocity.x * velocity.x) + (velocity.z * velocity.z)) < 0.02)
+                {
+                    player.SendMessage("Die");
+                }
+
                 _goose.position += velocity;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bat" && _isAlive && _isEnraged)
+        {
+            _isAlive = false;
+            _animator.SetBool("isDead", true);
+            _goose.rotation = Quaternion.Euler(0, 90 * random.Next(0, 3), 90);
         }
     }
 }
