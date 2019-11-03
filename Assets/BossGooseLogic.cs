@@ -67,6 +67,7 @@ public class BossGooseLogic : MonoBehaviour
                 {
                     player.SendMessage("Die");
                     _fightAudio.Stop();
+                    Destroy(gameObject);
                 }
 
                 _goose.position += velocity;
