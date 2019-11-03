@@ -13,6 +13,8 @@ public class BossGooseLogic : MonoBehaviour
     private AudioSource _roarAudio;
     [SerializeField]
     private AudioSource _deathAudio;
+    [SerializeField]
+    private AudioSource _fightAudio;
 
     public static Random random = new Random();
 
@@ -44,6 +46,7 @@ public class BossGooseLogic : MonoBehaviour
                     _animator.SetBool("isEnraged", true);
                     _isEnraged = true;
                     _roarAudio.Play();
+                    _fightAudio.PlayDelayed(3);
                 }
             }
             else
@@ -52,16 +55,25 @@ public class BossGooseLogic : MonoBehaviour
 
                 var playerPosition = player.transform.position;
 
-                var velocity = (playerPosition - _goose.position) / 100;
+                var difference = playerPosition - _goose.position;
+
+                var velocity = (difference).normalized;
+
+                velocity *= 0.02f;
 
                 velocity.y = 0;
 
-                if (Math.Sqrt((velocity.x * velocity.x) + (velocity.z * velocity.z)) < 0.02)
+                if (Math.Sqrt((difference.x * difference.x) + (difference.z * difference.z)) < 3)
                 {
                     player.SendMessage("Die");
+                    _fightAudio.Stop();
                 }
 
                 _goose.position += velocity;
+
+                var angle = (float)(((Math.Atan(velocity.x / velocity.z) * 180) / Math.PI)) + (velocity.z < 0 ? 180 : 0);
+
+                _goose.rotation = Quaternion.Euler(0, angle, 0);
             }
         }
     }
@@ -75,6 +87,7 @@ public class BossGooseLogic : MonoBehaviour
             _goose.rotation = Quaternion.Euler(0, 90 * random.Next(0, 3), 90);
 
             _deathAudio.Play();
+            _fightAudio.Stop();
         }
     }
 }
