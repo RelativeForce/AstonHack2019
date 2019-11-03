@@ -28,6 +28,9 @@ public class PlayerLogic : MonoBehaviour
         {
             _deathAudio.Play();
             _isDead = true;
+            var fader = GetComponentInChildren<OVRScreenFade>();
+
+            fader.FadeOut();
         }
     }
 }
