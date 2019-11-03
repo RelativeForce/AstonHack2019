@@ -80,7 +80,7 @@ public class GooseLogic : MonoBehaviour
 
     private void UpdateRotation()
     {
-        var angle = (float) (((Math.Atan(_velocity.x / _velocity.z) * 180) / Math.PI )) + 180;
+        var angle = (float) (((Math.Atan(_velocity.x / _velocity.z) * 180) / Math.PI )) + (_velocity.z < 0 ? 180 : 0);
 
         _goose.rotation = Quaternion.Euler(0, angle, 0);
 
